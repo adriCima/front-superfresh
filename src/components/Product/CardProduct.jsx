@@ -3,7 +3,7 @@ import { EyeIcon } from "@heroicons/react/24/solid"
 import { TagIcon } from "@heroicons/react/24/solid"
 
 
-export function CardProduct({product}){
+export function CardProduct({product, addToCart}){
     return (
         <>
             <article className='border-[1px] min-w-64 max-w-64 min-h-96 max-h-96 rounded-lg flex flex-col  items-center justify-between gap-1 p-4 hover:border-gray-400 hover:bg-slate-200 relative'>
@@ -31,7 +31,11 @@ export function CardProduct({product}){
                         <span className="text-lg text-gray-600">x { product.weight }</span>
                     </div>
                 </div>
-                <button className="bg-red-700 text-white px-4 py-1 rounded-md w-28 h-10 uppercase hover:bg-red-800">Agregar</button>
+                <button 
+                    onClick={()=> addToCart(product)}
+                    className="bg-red-700 text-white px-4 py-1 rounded-md w-28 h-10 uppercase hover:bg-red-800">
+                        Agregar
+                </button>
                 <div>                   
                     {product.id_subcategory === 2 && (                       
                         <>      

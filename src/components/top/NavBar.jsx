@@ -8,9 +8,9 @@ import TopMenu from './TopMenu'
 import TopMenuVertical from './TopMenuVertical'
 import { PreviewCart } from '../Cart/PreviewCard.jsx'
 
-import logo from '../../../public/brand/logo_SuperFreshof.png'
+import logo from '../../assets/brand/logo_SuperFreshof.png'
 
-export default function NavBar(){
+export default function NavBar({ cart, subtotal }){
 
     const [header, setHeader] = useState(false)
     const [isClick, setIsClick] = useState(false)
@@ -78,9 +78,13 @@ export default function NavBar(){
                         <button onClick={toggleCard} className='pt-4' >
                             <ShoppingCartIcon className="h-8 w-8 text-white " />
                         </button>  
-                        <div className="flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white text-xs p-4 mt-[-25px] ml-[-25px] z-10">
-                            1
+
+                        
+                        <div 
+                            className="flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white text-xs p-3 mt-[-25px] ml-[-25px] z-10">
+                            {cart && cart.length ? cart.length : 0}
                         </div>
+                        
                     
                         <button onClick={toggleNavBar}
                             className='md:hidden'
@@ -97,7 +101,7 @@ export default function NavBar(){
                 }
                 {
                     shopCart ? (
-                    <PreviewCart />) : ('')
+                    <PreviewCart cart={cart} subtotal={subtotal}/>) : ('')
                 }
                 <TopMenu />
            </div>

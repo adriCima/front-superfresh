@@ -1,11 +1,9 @@
-'use client'
 import { useEffect, useState } from "react"
 import { CardProduct } from "./CardProduct"
-import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay} from 'swiper/modules'
-import { SwiperNavButtonsNext } from '../../global/SwiperNavButtonsNext'
-import { SwiperNavButtonsPrev } from '../../global/SwiperNavButtonsPrev'
+import { A11y} from 'swiper/modules'
+import { SwiperNavButtonsNext } from '../global/SwiperNavButtonsNext'
+import { SwiperNavButtonsPrev } from '../global/SwiperNavButtonsPrev'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 
@@ -16,8 +14,12 @@ function DataOfertProducts(){
     useEffect(() => {
         async function loadOfertProducts(){
             try {
-                const response = await axios.get('http://localhost:3000/api/products/betsellers')
-                setOfertProducts(response.data.result)
+                fetch('http://localhost:3000/api/products/betsellers')
+                .then(response => response.json())
+                .then(data => {
+                    setOfertProducts(data.result);
+                    console.log(data.result);
+                })
             } catch (error) {
                 console.error('Error al cargar el producto en mas vendido ', error)
             }
@@ -29,7 +31,7 @@ function DataOfertProducts(){
    
 }
 
-export default function SlideBetSellerProduct(){
+export default function SlideBetSellerProduct({addToCart}){
     const products = DataOfertProducts()
     console.log(products)
     return(
@@ -63,7 +65,7 @@ export default function SlideBetSellerProduct(){
                 products.ofertProducts.map(pro =>{
                     return(
                         <SwiperSlide key={pro.id} >
-                            <CardProduct product={pro} />
+                            <CardProduct product={pro} addToCart={addToCart}/>
                         </SwiperSlide>
                     )
                 })

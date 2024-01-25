@@ -1,5 +1,5 @@
-import iconfacebook from '../../../public/svg/facebookIcon.svg'
-import iconwhastapp from '../../../public/svg/whatsappIcon.svg'
+import iconfacebook from '../../assets/svg/facebookIcon.svg'
+import iconwhastapp from '../../assets/svg/whatsappIcon.svg'
 
 export default function TopBar(){
     return(

@@ -17,8 +17,7 @@ function DataCategories() {
     useEffect(() => {
        function loadCategory() {
         try {
-
-          fetch('http://localhost:3000/api/categories')
+           fetch('http://localhost:3000/api/categories')
           .then(response => response.json())
           .then(data => setCategory(data.result));        
         } catch (error) {

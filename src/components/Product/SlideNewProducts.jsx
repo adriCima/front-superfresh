@@ -1,11 +1,10 @@
 'use client'
 import { useEffect, useState } from "react"
-import { CardProduct } from "./CardProduct"
-import axios from "axios";
+import { CardProduct } from "./CardProduct.jsx";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay} from 'swiper/modules'
-import { SwiperNavButtonsNext } from '../../global/SwiperNavButtonsNext'
-import { SwiperNavButtonsPrev } from '../../global/SwiperNavButtonsPrev'
+import { A11y } from 'swiper/modules'
+import { SwiperNavButtonsNext } from '../global/SwiperNavButtonsNext'
+import { SwiperNavButtonsPrev } from '../global/SwiperNavButtonsPrev'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 
@@ -15,9 +14,13 @@ function DataOfertProducts(){
 
     useEffect(() => {
         async function loadOfertProducts(){
-            try {
-                const response = await axios.get('http://localhost:3000/api/products/news')
-                setOfertProducts(response.data.result)
+            try {                
+                fetch('http://localhost:3000/api/products/news')
+                .then(response => response.json())
+                .then(data => {
+                    setOfertProducts(data.result);
+                    console.log(data.result);
+                })
             } catch (error) {
                 console.error('Error al cargar el producto nevo ', error)
             }
@@ -29,7 +32,7 @@ function DataOfertProducts(){
     console.log(ofertProducts);
 }
 
-export default function SlideNewProduct(){
+export default function SlideNewProduct({addToCart}){
     const products = DataOfertProducts()
     return(
         <Swiper
@@ -62,7 +65,7 @@ export default function SlideNewProduct(){
                 products.ofertProducts.map(pro =>{
                     return(
                         <SwiperSlide key={pro.id} >
-                            <CardProduct product={pro} />
+                            <CardProduct product={pro} addToCart={addToCart}/>
                         </SwiperSlide>
                     )
                 })

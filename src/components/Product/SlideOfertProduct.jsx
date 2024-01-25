@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { CardProduct } from "./CardProduct"
-import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay} from 'swiper/modules'
 import { SwiperNavButtonsNext } from '../global/SwiperNavButtonsNext'
@@ -13,10 +12,15 @@ function DataOfertProducts(){
     const [ofertProducts, setOfertProducts] = useState([]);
 
     useEffect(() => {
-        async function loadOfertProducts(){
+         async function loadOfertProducts(){
             try {
-                const response = await axios.get('http://localhost:3000/api/products/ofert')
-                setOfertProducts(response.data.result)
+                fetch('http://localhost:3000/api/products/ofert')
+                .then(response => response.json())
+                .then(data => {
+                    setOfertProducts(data.result);
+                    console.log(data.result);
+                })
+                      
             } catch (error) {
                 console.error('Error al cargar el producto en oferta ', error)
             }
@@ -24,11 +28,10 @@ function DataOfertProducts(){
         loadOfertProducts();
     }, [])
     
-    return {ofertProducts}
-    console.log(ofertProducts);
+    return {ofertProducts}    
 }
 
-export default function SlideOfertProduct(){
+export default function SlideOfertProduct({ addToCart }){
     const products = DataOfertProducts()
     return(
         <Swiper
@@ -61,7 +64,7 @@ export default function SlideOfertProduct(){
                 products.ofertProducts.map(pro =>{
                     return(
                         <SwiperSlide key={pro.id} >
-                            <CardProduct product={pro} />
+                            <CardProduct product={pro} addToCart={addToCart} />
                         </SwiperSlide>
                     )
                 })
