@@ -10,7 +10,7 @@ import { PreviewCart } from '../Cart/PreviewCard.jsx'
 
 import logo from '../../assets/brand/logo_SuperFreshof.png'
 
-export default function NavBar({ cart, subtotal }){
+export default function NavBar({ cart, subtotal, addToCart, restToCart }){
 
     const [header, setHeader] = useState(false)
     const [isClick, setIsClick] = useState(false)
@@ -101,7 +101,7 @@ export default function NavBar({ cart, subtotal }){
                 }
                 {
                     shopCart ? (
-                    <PreviewCart cart={cart} subtotal={subtotal}/>) : ('')
+                    <PreviewCart cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart}/>) : ('')
                 }
                 <TopMenu />
            </div>

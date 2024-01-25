@@ -51,6 +51,24 @@ export default function App() {
     localStorage.setItem('cart', JSON.stringify(cart));
   };
 
+  const restToCart = (product) => {
+    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+
+    if (existingProductIndex !== -1) {
+      // El producto ya existe en el carrito, actualiza cantidad y subtotal
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity -= 1;
+      updatedCart[existingProductIndex].subtotal -= product.sale_price;
+      setCart(updatedCart);
+    } else {
+      // El producto no existe en el carrito, agrégalo con cantidad y subtotal inicial
+      const updatedCart = [...cart, { ...product, quantity: 1, subtotal: product.sale_price }];
+      setCart(updatedCart);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
   const subtotal = calculateSubtotal(cart);
   console.log(subtotal);
   console.log("Valor de cart:", cart);
@@ -58,7 +76,7 @@ export default function App() {
     <>
       <TopBar />
       
-      <NavBar cart={cart} subtotal={subtotal}/>
+      <NavBar cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart}/>
       <HeroSlide />
       <SlideCatCircle />  
 
@@ -68,7 +86,7 @@ export default function App() {
       </div> 
 
       <div className="px-16 py-8">
-        <SlideOfertProducts addToCart={addToCart}/> 
+        <SlideOfertProducts addToCart={addToCart} restToCart={restToCart}/> 
       </div>
 
       <BannerTripleImg />
@@ -82,7 +100,7 @@ export default function App() {
       </div> 
 
       <div className="p-16">
-        <SlideBetSellerProduct addToCart={addToCart}/>
+        <SlideBetSellerProduct addToCart={addToCart} restToCart={restToCart}/>
       </div>
 
       <BannerSm className=' m-4 md:px-16 md:pb-16 '/>
@@ -94,7 +112,7 @@ export default function App() {
       </div> 
 
       <div className="p-16">
-        <SlideNewProduct addToCart={addToCart}/>
+        <SlideNewProduct addToCart={addToCart} restToCart={restToCart}/>
       </div>
 
       <Footer />   

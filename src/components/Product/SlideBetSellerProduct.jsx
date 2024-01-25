@@ -31,7 +31,7 @@ function DataOfertProducts(){
    
 }
 
-export default function SlideBetSellerProduct({addToCart}){
+export default function SlideBetSellerProduct({addToCart, restToCart}){
     const products = DataOfertProducts()
     console.log(products)
     return(
@@ -65,7 +65,7 @@ export default function SlideBetSellerProduct({addToCart}){
                 products.ofertProducts.map(pro =>{
                     return(
                         <SwiperSlide key={pro.id} >
-                            <CardProduct product={pro} addToCart={addToCart}/>
+                            <CardProduct product={pro} addToCart={addToCart} restToCart={restToCart}/>
                         </SwiperSlide>
                     )
                 })

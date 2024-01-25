@@ -3,11 +3,9 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { TrashIcon } from '@heroicons/react/24/solid' 
 import { ShoppingBagIcon } from '@heroicons/react/24/solid' 
 import { CurrencyDollarIcon } from '@heroicons/react/24/solid' 
-import { MinusCircleIcon } from '@heroicons/react/24/solid' 
-import { PlusCircleIcon } from '@heroicons/react/24/solid' 
+import ButtonsAgreeDisagree from './buttonsAgreeDisagre'
 
-
-export function PreviewCart({cart, subtotal}) {
+export function PreviewCart({cart, subtotal, addToCart, restToCart }) {
       // Función para agrupar y sumar productos por id
   const groupAndSumProducts = (cart) => {
     return cart.reduce((accumulator, product) => {
@@ -25,6 +23,8 @@ export function PreviewCart({cart, subtotal}) {
       return accumulator;
     }, []);
   };
+
+
 
   const groupedCart = groupAndSumProducts(cart);
   console.log(groupedCart);
@@ -48,11 +48,7 @@ export function PreviewCart({cart, subtotal}) {
                             <h2 className='font-semibold'>{product.category}  <span className='ml-4 text-gray-500'></span></h2>                                             
                         </div>
     
-                        <div className='flex items-center justify-evenly bg-slate-200 rounded-xl py-1'>
-                            <button><MinusCircleIcon className="h-6 w-6 text-gray-400 hover:text-red-700"/></button>                                         
-                                <h3 className='text-lg font-bold bg-white py-1 px-4 rounded-md'>{product.quantity}</h3>
-                            <button><PlusCircleIcon className="h-6 w-6 text-gray-400 hover:text-green-700"/></button>
-                        </div> 
+                        <ButtonsAgreeDisagree product={product} addToCart={addToCart} restToCart={restToCart} />
                         
                         <h3 className='text-green-700'><span> Bs. </span> {product.subtotal}</h3> 
     
