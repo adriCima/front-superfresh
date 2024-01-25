@@ -8,6 +8,27 @@ import { PlusCircleIcon } from '@heroicons/react/24/solid'
 
 
 export function PreviewCart({cart, subtotal}) {
+      // Función para agrupar y sumar productos por id
+  const groupAndSumProducts = (cart) => {
+    return cart.reduce((accumulator, product) => {
+      const existingProductIndex = accumulator.findIndex((item) => item.id === product.id);
+
+      if (existingProductIndex !== -1) {
+        // El producto ya existe en la agrupación, actualiza cantidad y total
+        accumulator[existingProductIndex].quantity += product.quantity;
+        accumulator[existingProductIndex].total += product.subtotal;
+      } else {
+        // El producto no existe en la agrupación, agrégalo
+        accumulator.push({ ...product });
+      }
+
+      return accumulator;
+    }, []);
+  };
+
+  const groupedCart = groupAndSumProducts(cart);
+  console.log(groupedCart);
+
     console.log(cart);
     return (
         <>  <article className="bg-blue-100 w-2/3 md:w-2/3 lg:w-1/3 flex flex-col gap-8 items-start absolute top-0 left-0 z-20 py-16 px-8 max-h-screen overflow-y-auto">
@@ -17,7 +38,7 @@ export function PreviewCart({cart, subtotal}) {
                     <h3 className='text-2xl'><span className='font-bold  mr-4 '>{cart.length}</span> Producto(s) </h3>
                 </div>
                 
-                 {cart.map((product) => (
+                 {groupedCart.map((product) => (
                  
                      <div key={product.id} className="w-full flex gap-4 items-center justify-evenly border-b-[1px] border-blue-950 pb-2">
                         <div className="flex items-center  gap-2 w-40">
@@ -29,11 +50,11 @@ export function PreviewCart({cart, subtotal}) {
     
                         <div className='flex items-center justify-evenly bg-slate-200 rounded-xl py-1'>
                             <button><MinusCircleIcon className="h-6 w-6 text-gray-400 hover:text-red-700"/></button>                                         
-                                <h3 className='text-lg font-bold bg-white py-1 px-4 rounded-md'>1</h3>
+                                <h3 className='text-lg font-bold bg-white py-1 px-4 rounded-md'>{product.quantity}</h3>
                             <button><PlusCircleIcon className="h-6 w-6 text-gray-400 hover:text-green-700"/></button>
                         </div> 
                         
-                        <h3 className='text-green-700'><span> Bs. </span> {product.sale_price}</h3> 
+                        <h3 className='text-green-700'><span> Bs. </span> {product.subtotal}</h3> 
     
                         <div className="accion">
                             <button>  <TrashIcon className="h-8 w-8 text-slate-300 hover:text-red-300"/> </button>

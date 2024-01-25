@@ -7,139 +7,106 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
+tengo el objeto cart que trae cuatro items
 
-ara mostrar la información de los elementos capturados en el componente PreviewCart, puedes realizar los siguientes pasos:
 
-Recuperar la información del carrito en PreviewCart:
 
-Puedes pasar el carrito como prop al componente PreviewCart y luego iterar sobre él para mostrar la información de cada producto. Asegúrate de recibir la prop correctamente y realizar el mapeo en el componente PreviewCart:
+ara lograr eso, necesitas modificar el componente PreviewCart para agrupar y sumar el total por producto antes de renderizar. A continuación, te proporciono una posible implementación para modificar el componente PreviewCart:
 
-jsx
-## Copy code
-import React from 'react';
+# COMPONENTE
+
+import { ShoppingCartIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { ShoppingBagIcon, CurrencyDollarIcon } from '@heroicons/react/24/solid';
 
 export function PreviewCart({ cart }) {
-  return (
-    <>
-      <article className="bg-white w-2/3 md:w-1/3 h-screen flex flex-col gap-8 items-start absolute top-0 left-0 z-20 py-16 px-8">
-        <div className="flex gap-4 items-center border-b-2 border-blue-950 w-full pb-2">
-          {/* ... el resto del código */}
-        </div>
-        {cart.map((product) => (
-          <div key={product.id} className="flex flex-row items-center justify-between w-full border-b-[1px] border-blue-950 pb-2 px-4">
-            <div className="font-semibold">
-              <h2>{product.name} <span className='ml-4 text-gray-500'>{product.description}</span></h2>
-              <div className="detalle flex gap-4">
-                <h3>{product.quantity}<span className='text-gray-500 ml-4'>x</span></h3>
-                <h3 className='text-green-700'><span> Bs. </span>{product.buy_price}</h3>
-              </div>
-            </div>
-            <div className="w-10 h-10 border-[1px] border-gray-700 flex items-center rounded-md overflow-hidden">
-              <img src={product.image} alt={product.name} />
-            </div>
-            <div className="accion">
-              <button>  <TrashIcon className="h-8 w-8 text-slate-300 hover:text-red-300"/> </button>
-            </div>
-          </div>
-        ))}
-        {/* ... el resto del código */}
-      </article>
-    </>
-  );
-}
-Asegúrate de ajustar las propiedades (name, description, quantity, buy_price, image, etc.) según la estructura de tu objeto de producto.
+  // Función para agrupar y sumar productos por id
+  const groupAndSumProducts = (cart) => {
+    return cart.reduce((accumulator, product) => {
+      const existingProductIndex = accumulator.findIndex((item) => item.id === product.id);
 
-Calcular el subtotal:
+      if (existingProductIndex !== -1) {
+        // El producto ya existe en la agrupación, actualiza cantidad y total
+        accumulator[existingProductIndex].quantity += product.quantity;
+        accumulator[existingProductIndex].total += product.subtotal;
+      } else {
+        // El producto no existe en la agrupación, agrégalo
+        accumulator.push({ ...product });
+      }
 
-Para calcular el subtotal, puedes utilizar el método reduce en el array del carrito:
-
-jsx
-## Copy code
-const subtotal = cart.reduce((acc, product) => acc + (product.quantity * product.buy_price), 0);
-Luego, puedes mostrar el subtotal en el componente PreviewCart.
-
-Mostrar los botones "Ver Carrito" y "Finalizar Compra":
-
-Los botones "Ver Carrito" y "Finalizar Compra" ya están en tu código. Asegúrate de que estén en el lugar correcto y funcionando según lo esperado.
-
-Recuerda pasar el estado del carrito como prop al componente PreviewCart al utilizarlo en tu aplicación principal. Por ejemplo:
-
-jsx
-## Copy code
-// En tu componente principal
-<PreviewCart cart={cart} />
-Con estos ajustes, deberías poder mostrar la información del carrito en el componente PreviewCart.
-
-
-### ACUMULAR
-
-Si deseas acumular la cantidad de productos del mismo tipo en lugar de repetirlos en el carrito, puedes modificar el manejo del carrito para agrupar productos por su identificador único (ID). Aquí tienes una guía sobre cómo hacerlo:
-
-Actualizar la lógica de addToCart en App:
-
-Modifica la función addToCart para verificar si el producto ya está en el carrito. Si ya está presente, aumenta la cantidad; de lo contrario, agrégalo como un nuevo elemento al carrito:
-
-jsx
-# Copy code
-export default function App() {
-  // ... el resto del código
-
-  const addToCart = (product) => {
-    const existingProduct = cart.find((item) => item.id === product.id);
-
-    if (existingProduct) {
-      // El producto ya está en el carrito, aumenta la cantidad
-      const updatedCart = cart.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      );
-      setCart(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-    } else {
-      // El producto no está en el carrito, agrégalo
-      const newCart = [...cart, { ...product, quantity: 1 }];
-      setCart(newCart);
-      localStorage.setItem('cart', JSON.stringify(newCart));
-    }
+      return accumulator;
+    }, []);
   };
 
-  // ... el resto del código
-}
-En este código, se utiliza find para buscar el producto en el carrito por su ID. Si se encuentra, se actualiza la cantidad; de lo contrario, se agrega como un nuevo elemento.
+  const groupedCart = groupAndSumProducts(cart);
 
-Modificar el componente PreviewCart:
-
-Ajusta el mapeo del carrito en el componente PreviewCart para reflejar el nuevo formato de los productos en el carrito:
-
-jsx
-Copy code
-export function PreviewCart({ cart }) {
   return (
     <>
-      <article className="bg-white w-2/3 md:w-1/3 h-screen flex flex-col gap-8 items-start absolute top-0 left-0 z-20 py-16 px-8">
+      <article className="bg-blue-100 w-2/3 md:w-2/3 lg:w-1/3 h-screen flex flex-col gap-8 items-start absolute top-0 left-0 z-20 py-16 px-8">
         <div className="flex gap-4 items-center border-b-2 border-blue-950 w-full pb-2">
-          {/* ... el resto del código */}
+          <ShoppingCartIcon className="h-16 w-16 text-blue-700 rotate-12" />
+          <h3 className="text-2xl">
+            <span className="font-bold  mr-4 ">{cart.length}</span> Producto(s){" "}
+          </h3>
         </div>
-        {cart.map((product) => (
-          <div key={product.id} className="flex flex-row items-center justify-between w-full border-b-[1px] border-blue-950 pb-2 px-4">
-            <div className="font-semibold">
-              <h2>{product.name} <span className='ml-4 text-gray-500'>{product.description}</span></h2>
-              <div className="detalle flex gap-4">
-                <h3>{product.quantity}<span className='text-gray-500 ml-4'>x</span></h3>
-                <h3 className='text-green-700'><span> Bs. </span>{product.buy_price}</h3>
+
+        {groupedCart.map((product) => (
+          <div
+            key={product.id}
+            className="w-full flex gap-4 items-center justify-evenly border-b-[1px] border-blue-950 pb-2"
+          >
+            <div className="flex items-center  gap-2 w-40">
+              <div className="hidden w-10 h-10 border-[1px] border-gray-700 md:flex items-center rounded-md overflow-hidden">
+                <img src={product.image} alt={product.name} />
               </div>
+              <h2 className="font-semibold">
+                {product.category} <span className="ml-4 text-gray-500"></span>
+              </h2>
             </div>
-            <div className="w-10 h-10 border-[1px] border-gray-700 flex items-center rounded-md overflow-hidden">
-              <img src={product.image} alt={product.name} />
+
+            <div className="flex items-center justify-evenly bg-slate-200 rounded-xl py-1">
+              <button>
+                <MinusCircleIcon className="h-6 w-6 text-gray-400 hover:text-red-700" />
+              </button>
+              <h3 className="text-lg font-bold bg-white py-1 px-4 rounded-md">{product.quantity}</h3>
+              <button>
+                <PlusCircleIcon className="h-6 w-6 text-gray-400 hover:text-green-700" />
+              </button>
             </div>
+
+            <h3 className="text-green-700">
+              <span> Bs. </span> {product.total}
+            </h3>
+
             <div className="accion">
-              <button>  <TrashIcon className="h-8 w-8 text-slate-300 hover:text-red-300"/> </button>
+              <button>
+                {" "}
+                <TrashIcon className="h-8 w-8 text-slate-300 hover:text-red-300" />{" "}
+              </button>
             </div>
           </div>
         ))}
-        {/* ... el resto del código */}
+
+        <div className="w-full flex items-center justify-between px-4 font-bold text-xl pb-2">
+          <h3>Subtotal</h3>
+          <h3 className="text-green-700">
+            <span>Bs. </span>
+            {groupedCart.reduce((subtotal, product) => subtotal + product.total, 0)}
+          </h3>
+        </div>
+
+        <div className="flex flex-col gap-4 w-full">
+          <a href="market/carrito">
+            <button className="bg-gray-200 rounded-md px-2 py-2 w-56 flex items-center gap-2 hover:bg-gray-300">
+              <ShoppingBagIcon className="h-8 w-8 text-green-700" /> Ver Carrito
+            </button>
+          </a>
+          <a href="market/checkout">
+            <button className="bg-gray-200 rounded-md px-2 py-2 w-56 flex items-center gap-2 hover:bg-gray-300">
+              <CurrencyDollarIcon className="h-8 w-8 text-green-700" />Finalizar Compra
+            </button>
+          </a>
+        </div>
       </article>
     </>
   );
 }
-Ahora, cada producto en el carrito tiene su cantidad acumulada y se representa en el mapeo.
-

@@ -30,17 +30,25 @@ export default function App() {
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartWithQuantity = storedCart.map((product) => ({
-      ...product,
-      quantity: product.quantity || 1, // Asigna un valor predeterminado si quantity es undefined
-    }));
-    setCart(cartWithQuantity);
-  }, []);
+    setCart(storedCart);
+  }, []); // Solo se ejecuta una vez al montar el componente
 
   const addToCart = (product) => {
-    const updatedCart = [...cart, { ...product, quantity: (product.quantity || 0) + 1 }];
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+
+    if (existingProductIndex !== -1) {
+      // El producto ya existe en el carrito, actualiza cantidad y subtotal
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity += 1;
+      updatedCart[existingProductIndex].subtotal += product.sale_price;
+      setCart(updatedCart);
+    } else {
+      // El producto no existe en el carrito, agrégalo con cantidad y subtotal inicial
+      const updatedCart = [...cart, { ...product, quantity: 1, subtotal: product.sale_price }];
+      setCart(updatedCart);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
   };
 
   const subtotal = calculateSubtotal(cart);
