@@ -64,12 +64,12 @@ export function PreviewCart({cart, subtotal, addToCart, restToCart }) {
                     </div>
                     <div className=" flex flex-col gap-4 w-full">
                     <a 
-                        href='market/carrito'
+                        href='/pages/cart'
                     >
                         <button className='bg-gray-200 rounded-md px-2 py-2 w-56 flex items-center  gap-2 hover:bg-gray-300'><ShoppingBagIcon className="h-8 w-8 text-green-700"/> Ver Carrito</button>
                     </a>
                     <a
-                        href='market/checkout'
+                        href='checkout'
                     >
                         <button className='bg-gray-200 rounded-md px-2 py-2 w-56 flex items-center  gap-2 hover:bg-gray-300'><CurrencyDollarIcon className="h-8 w-8 text-green-700"/>Finalizar Compra</button>
                     </a>
@@ -80,4 +80,3 @@ export function PreviewCart({cart, subtotal, addToCart, restToCart }) {
         </>
     )
 }
-
