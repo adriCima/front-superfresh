@@ -1,8 +1,8 @@
 import TopBar from '../components/top/topbar'
 import NavBar from '../components/top/NavBar'
 import { Footer } from '../components/Footer/Footer'
-import ListCard from '../components/Cart/ListCard'
 import { useState, useEffect } from 'react'
+import ListCheckout from '../components/Cart/ListCheckout'
 
 export default function Cart(){
 
@@ -74,7 +74,7 @@ export default function Cart(){
         <>
             <TopBar />
             <NavBar cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart}/>
-            <ListCard cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart}/>
+            <ListCheckout cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart}/>           
             <Footer />
         </>
     )

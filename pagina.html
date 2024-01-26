@@ -1,0 +1,67 @@
+<div className="flex flex-col md:flex-row gap-4 p-4  ">
+    <div className="flex flex-col gap-2 px-4 md:w-1/2">   
+        <div className="flex flex-col gap-2">
+
+
+           
+            <div className="">
+                Calle Beni N°1582 
+            </div>
+            <div className="div">
+            <select 
+                className="h-10 bg-slate-300 rounded-md mx-16 px-4 border-[1px] border-gray-400 "
+                name="" id="">
+                <option value="0">Seleccionar la zona -- </option>
+                <option value="1">Miraflores</option>
+                <option value="2">Sopocachi</option>
+                <option value="3">San Antonio</option>                                                   
+            </select> 
+
+            <label>
+                DIRECCION:
+                <input type="text" placeholder="Direccion" />
+            </label>
+            </div>                       
+        </div>
+
+        
+
+      
+    </div>            
+    <div className="flex-col md:w-1/2">
+        <div className="flex items-center gap-4 border-b-[1px] border-green-950 px-2"> 
+            <span className="text-green-900 font-bold text-lg">3.- </span>  
+            <CurrencyDollarIcon className="w-8 h-8 text-green-900"/>                                          
+            <h3 className="font-bold">FATURACIÓN</h3>
+        </div>
+        
+
+        <div className="flex items-center gap-4 border-b-[1px] border-green-950 px-2"> 
+            <span className="text-green-900 font-bold text-lg">4.- </span>  
+            <CurrencyDollarIcon className="w-8 h-8 text-green-900"/>                                          
+            <h3 className="font-bold">FINALIZAR PAGO</h3>
+        </div>
+        <div className="descuento">
+                <h3 className='text-lg mb-4'>Si tienes un cupón de descuento registralo aqui:</h3>
+                <input 
+                    className='bg-gray-300 w-1/3 px-4 py-2 rounded-lg mr-10'
+                    placeholder='Código de cupón' type="text" autoFocus/>
+                <button className=' bg-teal-600 text-white px-8 py-2 text-lg rounded-lg'>Aplicar</button>
+            </div>
+
+            <div className="flex items-center justify-evenly bg-green-200 rounded-sm h-16 w-full text-green-800 font-bold text-xl">
+                <p>TOTAL</p>
+                <p>{subtotal.toFixed(2)}</p>
+            </div>
+
+
+
+                <div className="list-none">
+                 
+            </div>
+            <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Realizar el Pedido</button>
+
+
+       
+    </div>
+</div>

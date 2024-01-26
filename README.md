@@ -1,53 +1,94 @@
 #  od
 
+Hola estoy trabaando con vite js en el siguiente codigo 
+ <div className="flex flex-col gap-4 px-8">
+                            <div className="flex items-center gap-4 border-b-[1px] border-green-950 p-2 "> 
+                                <span className="text-green-900 font-bold text-lg">1.- </span>  
+                                <TruckIcon className="w-8 h-8 text-green-900"/>                                          
+                                <h3 className="font-bold">  TIPO DE ENVIO</h3>
+                            </div>
+                           <div className="flex flex-col gap-4 px-16">
+                            <select 
+                                    className="h-10 bg-slate-300 rounded-md border-[1px] border-gray-400 "
+                                    name="txy_shipping">
+                                    <option value="0">Seleccionar -- </option>
+                                    <option value="1">Retiro en tienda</option>
+                                    <option value="2">Envio a domicilio</option>
+                                </select> 
+                                <div className="ml-8 min-h-24">
+                                        RESULTADOS DEL SELECT
+                                </div>
+                           </div>
+                        </div>      
 
-Configura las rutas:
-Abre el archivo vite.config.js en la raíz de tu proyecto. 
-Asegúrate de tener instalado el plugin @vitejs/plugin-react. 
-Puedes instalarlo ejecutando npm install @vitejs/plugin-react si aún no lo has hecho.
 
-Luego, modifica tu configuración para incluir la nueva ruta:
+quisiera cambiar dinamicamente el DIV que tiene RESULTADOS DEL SELECT de acuerdo a la la opcion que el usuario elija del select con name="txt_shipping" si no se cambia el valor por defecto sera vacio
 
-javascript
-Copy code
-// vite.config.js
-
-import ReactRefresh from '@vitejs/plugin-react-refresh';
-import { defineConfig } from 'vite';
-
-export default defineConfig({
-  plugins: [ReactRefresh()],
-  routes: [
-    { path: '/', component: '/src/App.jsx' },
-    { path: '/mi-pagina', component: '/src/MiPagina.jsx' }, // Nueva ruta
-  ],
-});
-Asegúrate de que tu componente principal (App.jsx o similar) maneje las rutas:
-Dependiendo de cómo estés manejando las rutas en tu aplicación React (puedes estar usando React Router u otra solución), asegúrate de que tu componente principal esté configurado para manejar la navegación entre las páginas.
+Para cambiar dinámicamente el contenido del div "RESULTADOS DEL SELECT" según la opción seleccionada en el select,
+ puedes agregar un estado al componente y utilizar un controlador de eventos 
+ onChange en el select. Aquí te muestro un ejemplo en el que uso el estado selectedOption para realizar el seguimiento de la opción seleccionada y actualizo el contenido del div en consecuencia:
 
 jsx
-Copy code
-// src/App.jsx
+# formchechkout.jsx
+import { useState } from 'react';
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import MiPagina from './MiPagina';
+const TuComponente = () => {
+  // Estado para almacenar la opción seleccionada
+  const [selectedOption, setSelectedOption] = useState('0');
 
-const App = () => {
+  // Manejador de eventos onChange del select
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  // Contenido dinámico basado en la opción seleccionada
+  const renderResultadoSelect = () => {
+    if (selectedOption === '1') {
+      return (
+        <div className="ml-8 min-h-24">
+          Resultados para Retiro en tienda
+        </div>
+      );
+    } else if (selectedOption === '2') {
+      return (
+        <div className="ml-8 min-h-24">
+          Resultados para Envío a domicilio
+        </div>
+      );
+    } else {
+      // Si no se ha seleccionado una opción válida, mostrar contenido vacío
+      return (
+        <div className="ml-8 min-h-24">
+          RESULTADOS DEL SELECT
+        </div>
+      );
+    }
+  };
+
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={/* Componente de tu página principal */} exact />
-        <Route path="/mi-pagina" component={MiPagina} />
-      </Switch>
-    </Router>
+    <div className="flex flex-col gap-4 px-8">
+      <div className="flex items-center gap-4 border-b-[1px] border-green-950 p-2 ">
+        <span className="text-green-900 font-bold text-lg">1.- </span>
+        <TruckIcon className="w-8 h-8 text-green-900"/>
+        <h3 className="font-bold">TIPO DE ENVÍO</h3>
+      </div>
+      <div className="flex flex-col gap-4 px-16">
+        <select
+          className="h-10 bg-slate-300 rounded-md border-[1px] border-gray-400"
+          name="txt_shipping"
+          onChange={handleSelectChange}
+          value={selectedOption}
+        >
+          <option value="0">Seleccionar -- </option>
+          <option value="1">Retiro en tienda</option>
+          <option value="2">Envío a domicilio</option>
+        </select>
+        {/* Mostrar el contenido dinámico */}
+        {renderResultadoSelect()}
+      </div>
+    </div>
   );
 };
 
-export default App;
-Asegúrate de que react-router-dom esté instalado si estás utilizando React Router.
-
-Navega a tu nueva página:
-Ahora puedes acceder a tu nueva página navegando a la ruta correspondiente. Si estás utilizando React Router, podrías acceder a tu nueva página en http://localhost:3000/mi-pagina si el puerto predeterminado es 3000.
-
-¡Eso debería ser suficiente para añadir una nueva página a tu proyecto Vite con React! Ajusta estos pasos según las necesidades específicas de tu proyecto.
+export default TuComponente;
+Este ejemplo utiliza el estado selectedOption para realizar un seguimiento de la opción seleccionada. La función handleSelectChange se utiliza como un manejador de eventos onChange en el select para actualizar el estado. Luego, la función renderResultadoSelect se encarga de renderizar el contenido del div según la opción seleccionada.

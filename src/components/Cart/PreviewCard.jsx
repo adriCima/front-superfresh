@@ -30,7 +30,7 @@ export function PreviewCart({cart, subtotal, addToCart, restToCart }) {
     
                         <ButtonsAgreeDisagree product={product} addToCart={addToCart} restToCart={restToCart} />
                         
-                        <h3 className='text-green-700'><span> Bs. </span> {product.subtotal}</h3> 
+                        <h3 className='text-green-700 font-semibold'><span> Bs. </span> {product.subtotal.toFixed(2)}</h3> 
     
                         <div className="accion">
                             <button>  <TrashIcon className="h-8 w-8 text-slate-300 hover:text-red-300"/> </button>

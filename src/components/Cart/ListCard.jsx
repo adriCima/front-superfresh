@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
-import { ArrowPathIcon, PlusCircleIcon, MinusCircleIcon, TrashIcon, ShoppingBagIcon } from '@heroicons/react/24/solid'
+import {  TrashIcon, ShoppingBagIcon } from '@heroicons/react/24/solid'
 
 import { groupAndSumProducts } from '../../utils/functions'
 import { CardProduct } from '../product/CardProduct';
@@ -47,11 +47,11 @@ export default function ListCart({cart, subtotal, addToCart, restToCart}) {
                                                     </div> 
                                                 </td>
                                                 <td className='font-semibold text-lg'>{product.name}<span className='ml-4 text-gray-700'>x {product.weight}</span></td>
-                                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span>{product.sale_price}</h3> </td>
+                                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span>{product.sale_price.toFixed(2)}</h3> </td>
                                                 <td> 
                                                     <ButtonsAgreeDisagree product={product} addToCart={addToCart} restToCart={restToCart}/>                       
                                                 </td>
-                                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span> {product.subtotal}</h3> </td>
+                                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span> {product.subtotal.toFixed(2)}</h3> </td>
                                                 <td>   <button>  <TrashIcon className="h-8 w-8 text-gray-400 hover:text-red-700"/> </button></td>
                                             </>
                             </tr>                        
@@ -77,8 +77,10 @@ export default function ListCart({cart, subtotal, addToCart, restToCart}) {
                    
                     <div className="flex items-center justify-between px-4 border-b-2 border-gray-400 pb-4">    
                         <h3 className='text-red-800 font-bold text-xl'>Subtotal</h3>
-                        <h3 className='text-green-700 font-bold text-xl'><span>Bs. </span>{subtotal}</h3>
+                        <h3 className='text-green-700 font-bold text-xl'><span>Bs. </span>{subtotal.toFixed(2)}</h3>
                     </div>
+
+                        
                    
                     <div className=" self-start mt-4">
                         <a 
