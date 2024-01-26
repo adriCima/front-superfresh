@@ -1,20 +1,20 @@
-import TopBar from './components/top/topbar.jsx'
-import NavBar from './components/top/NavBar.jsx'
-import HeroSlide from './components/hero/HeroSlide.jsx'
-import SlideCatCircle from './components/category/SlideCatCircle.jsx'
-import SlideOfertProducts from './components/product/SlideOfertProduct.jsx'
-import BannerTripleImg from './components/banners/BannerTripleImg.jsx'
-import SlideBetSellerProduct from './components/product/SlideBetSellerProduct.jsx'
-import BannerSm from './components/banners/BannerSm.jsx'
-import SlideNewProduct from './components/Product/SlideNewProducts.jsx'
-import { Footer } from './components/Footer/Footer.jsx'
-import iconwhastapp from './assets/svg/whatsappIcon.svg'
+import TopBar from '../components/top/topbar.jsx'
+import NavBar from '../components/top/NavBar.jsx'
+import HeroSlide from '../components/hero/HeroSlide.jsx'
+import SlideCatCircle from '../components/category/SlideCatCircle.jsx'
+import SlideOfertProducts from '../components/product/SlideOfertProduct.jsx'
+import BannerTripleImg from '../components/banners/BannerTripleImg.jsx'
+import SlideBetSellerProduct from '../components/product/SlideBetSellerProduct.jsx'
+import BannerSm from '../components/banners/BannerSm.jsx'
+import SlideNewProduct from '../components/Product/SlideNewProducts.jsx'
+import { Footer } from '../components/Footer/Footer.jsx'
+import iconwhastapp from '../assets/svg/whatsappIcon.svg'
 import { useState, useEffect } from 'react'
+
 
 //Funcion para limpiear el localstorage
   const handleClearLocalStorage = () => {
-    localStorage.clear();   
-  }
+    localStorage.clear();     }
 
   const calculateSubtotal = (cart) => {
     return cart.reduce((subtotal, product) => {
@@ -25,7 +25,7 @@ import { useState, useEffect } from 'react'
     }, 0);
   };
 
-export default function App() {  
+export default function Home() {  
   const [cart, setCart] = useState([]);
 
   useEffect(() => {

@@ -1,12 +1,17 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
-import { ArrowPathIcon } from '@heroicons/react/24/solid'
-import { TrashIcon } from '@heroicons/react/24/solid' 
-import { MinusCircleIcon } from '@heroicons/react/24/solid' 
-import { PlusCircleIcon } from '@heroicons/react/24/solid' 
+import { ArrowPathIcon, PlusCircleIcon, MinusCircleIcon, TrashIcon, ShoppingBagIcon } from '@heroicons/react/24/solid'
 
-import Link from 'next/link'
+import { groupAndSumProducts } from '../../utils/functions'
+import { CardProduct } from '../product/CardProduct';
+import ButtonsAgreeDisagree from './buttonsAgreeDisagre';
 
-export function ListCart() {
+export default function ListCart({cart, subtotal, addToCart, restToCart}) {
+
+  const groupedCart = groupAndSumProducts(cart)
+  console.log(groupedCart);
+
+
+
   return (
     <>
         <article className="bg-white w-full flex flex-col gap-8 items-start  py-16 px-8">
@@ -29,57 +34,39 @@ export function ListCart() {
                                 <th>Eliminar</th>
                             </tr> 
                         </thead>
-                        <tbody>
-                            <tr className='text-center border-b-[1px] border-gray-300 h-14'>
-                                <td>1</td>
-                                <td>
-                                    <div className="w-10 h-10 border-[1px] border-gray-700 flex items-center rounded-md overflow-hidden">
-                                        <img src="/img/products/papa roja.jpg" alt="papa roja" />
-                                    </div> 
-                                </td>
-                                <td className='font-semibold text-lg'>Papa roja <span className='ml-4 text-gray-700'>x kilo</span></td>
-                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span> 2.80</h3> </td>
-                                <td> 
-                                    <div className=' flex  items-center justify-evenly bg-slate-200 rounded-xl py-1'>
-                                        <button><MinusCircleIcon className="h-6 w-6 text-gray-400 hover:text-red-700"/></button>                                         
-                                        <h3 className='text-lg font-bold bg-white py-1 px-4 rounded-md'>1</h3>
-                                        <button><PlusCircleIcon className="h-6 w-6 text-gray-400 hover:text-green-700"/></button>
-                                    </div>
-                        
-                                </td>
-                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span> 2.80</h3> </td>
-                                <td>   <button>  <TrashIcon className="h-8 w-8 text-gray-400 hover:text-red-700"/> </button></td>
-                            </tr>
-                            <tr className='text-center border-b-[1px] border-gray-300 h-14'>
-                                <td>1</td>
-                                <td>
-                                    <div className="w-10 h-10 border-[1px] border-gray-700 flex items-center rounded-md overflow-hidden">
-                                        <img src="/img/products/papa roja.jpg" alt="papa roja" />
-                                    </div> 
-                                </td>
-                                <td className='font-semibold text-lg'>Papa roja <span className='ml-4 text-gray-700'>x kilo</span></td>
-                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span> 2.80</h3> </td>
-                                <td> 
-                                    <div className=' flex  items-center justify-evenly bg-slate-200 rounded-xl py-1'>
-                                        <button><MinusCircleIcon className="h-6 w-6 text-gray-400 hover:text-red-700"/></button>                                         
-                                        <h3 className='text-lg font-bold bg-white py-1 px-4 rounded-md'>1</h3>
-                                        <button><PlusCircleIcon className="h-6 w-6 text-gray-400 hover:text-green-700"/></button>
-                                    </div>
-                        
-                                </td>
-                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span> 2.80</h3> </td>
-                                <td>   <button>  <TrashIcon className="h-8 w-8 text-gray-400 hover:text-red-700"/> </button></td>
-                            </tr>
 
+                        <tbody>
+                                {
+                                    groupedCart.map((product) => (
+                                        <tr className='text-center border-b-[1px] border-gray-300 h-14'>
+                                            <>
+                                                <td>{product.id}</td>
+                                                <td>
+                                                    <div className="w-10 h-10 border-[1px] border-gray-700 flex items-center rounded-md overflow-hidden">
+                                                        <img src={product.image} alt={product.name} />
+                                                    </div> 
+                                                </td>
+                                                <td className='font-semibold text-lg'>{product.name}<span className='ml-4 text-gray-700'>x {product.weight}</span></td>
+                                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span>{product.sale_price}</h3> </td>
+                                                <td> 
+                                                    <ButtonsAgreeDisagree product={product} addToCart={addToCart} restToCart={restToCart}/>                       
+                                                </td>
+                                                <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span> {product.subtotal}</h3> </td>
+                                                <td>   <button>  <TrashIcon className="h-8 w-8 text-gray-400 hover:text-red-700"/> </button></td>
+                                            </>
+                            </tr>                        
+                                        ))
+                                }
                         </tbody>
                     </table>  
+
                     <div className=" self-start mt-4">
-                        <Link href='#' >
-                            <button className='bg-gray-200 rounded-md px-2 py-2 w-56 flex items-center  gap-2 hover:bg-gray-300'>
-                                <ArrowPathIcon className="h-8 w-8 text-green-700"/> 
-                                Actualizar 
+                        <a href='/' >
+                            <button className='bg-gray-200 rounded-md px-2 py-2 w-56 flex items-center font-medium gap-2 hover:bg-gray-300'>
+                                <ShoppingBagIcon className="h-6 w-6 text-blue-700"/> 
+                                Seguir Comprando 
                             </button>
-                        </Link>  
+                        </a>  
                       
                     </div>     
                
@@ -90,15 +77,15 @@ export function ListCart() {
                    
                     <div className="flex items-center justify-between px-4 border-b-2 border-gray-400 pb-4">    
                         <h3 className='text-red-800 font-bold text-xl'>Subtotal</h3>
-                        <h3 className='text-green-700 font-bold text-xl'><span>Bs. </span>11.20</h3>
+                        <h3 className='text-green-700 font-bold text-xl'><span>Bs. </span>{subtotal}</h3>
                     </div>
                    
                     <div className=" self-start mt-4">
-                        <Link 
+                        <a 
                             href='/checkout'
                         >
                             <button className='bg-green-700 rounded-md px-2 py-2 w-60 flex items-center  text-white gap-2 hover:bg-green-600'>  <ArrowRightIcon className='w-8 h-8 text-white'/>  Finalizar Compra </button>
-                        </Link>   
+                        </a>   
                     </div>  
                 </div> 
 

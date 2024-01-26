@@ -4,32 +4,12 @@ import { TrashIcon } from '@heroicons/react/24/solid'
 import { ShoppingBagIcon } from '@heroicons/react/24/solid' 
 import { CurrencyDollarIcon } from '@heroicons/react/24/solid' 
 import ButtonsAgreeDisagree from './buttonsAgreeDisagre'
+import { groupAndSumProducts } from '../../utils/functions'
 
 export function PreviewCart({cart, subtotal, addToCart, restToCart }) {
-      // Función para agrupar y sumar productos por id
-  const groupAndSumProducts = (cart) => {
-    return cart.reduce((accumulator, product) => {
-      const existingProductIndex = accumulator.findIndex((item) => item.id === product.id);
-
-      if (existingProductIndex !== -1) {
-        // El producto ya existe en la agrupación, actualiza cantidad y total
-        accumulator[existingProductIndex].quantity += product.quantity;
-        accumulator[existingProductIndex].total += product.subtotal;
-      } else {
-        // El producto no existe en la agrupación, agrégalo
-        accumulator.push({ ...product });
-      }
-
-      return accumulator;
-    }, []);
-  };
-
-
 
   const groupedCart = groupAndSumProducts(cart);
-  console.log(groupedCart);
-
-    console.log(cart);
+ 
     return (
         <>  <article className="bg-blue-100 w-2/3 md:w-2/3 lg:w-1/3 flex flex-col gap-8 items-start absolute top-0 left-0 z-20 py-16 px-8 max-h-screen overflow-y-auto">
             {/* <article className="bg-blue-100 w-2/3 md:w-2/3 lg:w-1/3 h-screen flex flex-col gap-8 items-start absolute top-0 left-0 z-20 py-16 px-8"> */}
@@ -64,7 +44,7 @@ export function PreviewCart({cart, subtotal, addToCart, restToCart }) {
                     </div>
                     <div className=" flex flex-col gap-4 w-full">
                     <a 
-                        href='/pages/cart'
+                        href='cart'
                     >
                         <button className='bg-gray-200 rounded-md px-2 py-2 w-56 flex items-center  gap-2 hover:bg-gray-300'><ShoppingBagIcon className="h-8 w-8 text-green-700"/> Ver Carrito</button>
                     </a>
