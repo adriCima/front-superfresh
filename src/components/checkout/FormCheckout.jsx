@@ -10,7 +10,9 @@ export default function FormCheckout({subtotal}){
     const [discountCode, setDiscountCode] = useState('')
     const [discountAmount, setDiscountAmount] = useState(0);
     const [discountApplied, setDiscountApplied] = useState(false);
-    const [fromData, setFormData] = useState({
+    
+    // Iniciamos con valores predeterminados para el registro de la venta
+    const [formData, setFormData] = useState({
         shipping_type: "",
         zona:"",
         direcccion: "",
@@ -23,8 +25,18 @@ export default function FormCheckout({subtotal}){
         pay_type:"",
         telefono_tm:"",
     })
-    
 
+    // funcion que dispara el caputrar los datos
+    const  handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({...formData, [bane] : value})
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+    }
+ 
     // Arreglo de ejemplo para los cupones de descuento
     const discountCodes = [
         { codigo: "DESCSP10", porcentaje: 20},
@@ -110,8 +122,16 @@ export default function FormCheckout({subtotal}){
     }else if(paymethod === 'tigomoney'){
         payContent = (
             <>
+                <label className="font-bold text-red-800">
+                    NUESTO NÚMERO TIGO MONEY
+                    <input 
+                    className="w-full my-2 bg-slate-200 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium"
+                    type="text" 
+                    value="68258778" 
+                    disabled/>                                    
+                </label>
                 <label className="font-bold text-gray-600">
-                    NÚMERO TIGO MONEY
+                    REGISTRE SU NÚMERO TIGO MONEY 
                     <input 
                     className="w-full my-2 bg-slate-200 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium"
                     type="text" 
@@ -124,9 +144,8 @@ export default function FormCheckout({subtotal}){
         payContent = (
             <> 
                 <div className="w-full flex items-center justify-center gap-2">
-                    <img src={qrpago} alt={qrpago} />                 
-                                                   
-       
+                    <img src={qrpago} alt={qrpago} />               
+                                                  
                 </div>
               
                 <ol className="text-red-800 text-sm text-balance font-bold list-decimal mb-4">
@@ -150,7 +169,9 @@ export default function FormCheckout({subtotal}){
 
     return(
         <>
-            <form className=" lg:flex gap-8 lg:justify-between">
+            <form 
+                onSubmit={handleSubmit}
+                className=" lg:flex gap-8 lg:justify-between">
                     <div className="flex flex-col w-full md:w-1/2"> 
                         <div className="flex flex-col gap-4 lg:px-4">
                             <div className="flex items-center gap-4 border-b-[1px] border-green-950 p-2 "> 
