@@ -14,7 +14,7 @@ export default function ListCart({cart, subtotal, addToCart, restToCart}) {
 
   return (
     <>
-        <article className="bg-white w-full flex flex-col gap-8 items-start  py-16 px-8">
+        <article className="bg-white w-full flex flex-col gap-8 items-start  py-16 px-8 mb-16">
             <div className="flex gap-4 items-center border-b-2 border-blue-950 w-full pb-2">
                <p>Mensaje de compra minima</p>
             </div>
@@ -46,7 +46,7 @@ export default function ListCart({cart, subtotal, addToCart, restToCart}) {
                                                         <img src={product.image} alt={product.name} />
                                                     </div> 
                                                 </td>
-                                                <td className='font-semibold text-lg'>{product.name}<span className='ml-4 text-gray-700'>x {product.weight}</span></td>
+                                                <td className='text-left pl-8 font-semibold text-lg'>{product.category}<span className='ml-4 text-gray-700'>x {product.weight}</span></td>
                                                 <td> <h3 className='text-teal-900 font-bold text-lg'><span> Bs. </span>{product.sale_price.toFixed(2)}</h3> </td>
                                                 <td> 
                                                     <ButtonsAgreeDisagree product={product} addToCart={addToCart} restToCart={restToCart}/>                       
