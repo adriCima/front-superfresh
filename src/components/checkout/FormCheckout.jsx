@@ -2,8 +2,6 @@ import { TruckIcon, CurrencyDollarIcon, ClipboardDocumentIcon, CreditCardIcon, B
 import qrpago from '../../assets/checkout/qr_example.png'
 import { useState } from "react"
 
-
-
 export default function FormCheckout({subtotal}){
     const [shippingType, setShippingType] = useState(0);
     const [shippingContent, setShippingContent] = useState(null)
@@ -12,6 +10,19 @@ export default function FormCheckout({subtotal}){
     const [discountCode, setDiscountCode] = useState('')
     const [discountAmount, setDiscountAmount] = useState(0);
     const [discountApplied, setDiscountApplied] = useState(false);
+    const [fromData, setFormData] = useState({
+        shipping_type: "",
+        zona:"",
+        direcccion: "",
+        nit:"",
+        razon_social:"",
+        shipping_cost:"",
+        discount:"",
+        discoun_code:"",
+        total:"",
+        pay_type:"",
+        telefono_tm:"",
+    })
     
 
     // Arreglo de ejemplo para los cupones de descuento
@@ -72,7 +83,9 @@ export default function FormCheckout({subtotal}){
                             DIRECCIÓN
                             <input 
                                 className="w-full my-2 bg-slate-100 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium "
-                                type="text" placeholder="Dirección" />
+                                type="text" placeholder="Dirección"
+                                name="direccion"
+                            />
                         </label>
                     </>
                 )
@@ -92,7 +105,7 @@ export default function FormCheckout({subtotal}){
 
     if(paymethod === 'efectivo'){
         payContent = (
-            <><p className="flex w-full h-full items-center justify-center text-teal-900 font-semibold text-6xl">{ ((subtotal + shippingCost) - discountAmount).toFixed(2) }</p></>
+            <><p className="flex w-full h-full items-center justify-center text-teal-900 font-semibold text-6xl">Bs. { ((subtotal + shippingCost) - discountAmount).toFixed(2) }</p></>
         )
     }else if(paymethod === 'tigomoney'){
         payContent = (
@@ -110,14 +123,29 @@ export default function FormCheckout({subtotal}){
     }else if(paymethod === 'qr'){
         payContent = (
             <> 
-                <div className="flex items-center w-full h-full justify-center">
-                    <img src={qrpago} alt={qrpago} />
+                <div className="w-full flex items-center justify-center gap-2">
+                    <img src={qrpago} alt={qrpago} />                 
+                                                   
+       
                 </div>
+              
+                <ol className="text-red-800 text-sm text-balance font-bold list-decimal mb-4">
+                    <li>Escane el Codigo QR</li>
+                    <li>Realize el pago</li>
+                    <li>Envíe el comprobante por whatsapp.</li>                   
+                    <li>Finalice el proceso</li>                   
+                    <li>Recibirá la confirmación del pedido en cuanto registremos correctamenta la transacción</li>
+                </ol>
+                <a  
+                    target="blanck"
+                    href="https://wa.me/59175226707" 
+                    className="bg-teal-700 px-6 py-2 text-white rounded-md "> 
+                    Enviar Comprobante
+                </a>
+
             </>
         )
     }
-    
-
     
 
     return(
@@ -133,7 +161,7 @@ export default function FormCheckout({subtotal}){
                             <div className="flex flex-col gap-4 md:px-2">
                                 <select 
                                     className="h-10 bg-slate-200 rounded-md border-[1px] border-gray-400 pl-4 "
-                                    name="txt_shipping"                                 
+                                    name="shipping_type"                                 
                                     onChange={handleShippingChange}
                                 >
                                     <option value="0">Seleccionar -- </option>
@@ -155,11 +183,21 @@ export default function FormCheckout({subtotal}){
                             <div className="flex flex-col gap-4 px-2">
                                 <label className="text-gray-700 font-bold text-sm">
                                     NIT:
-                                    <input className="h-10 bg-slate-200 border-[1px] border-gray-400 w-full pl-4 rounded-md font-medium" type="text" placeholder="NIT o CI" />
+                                    <input 
+                                        className="h-10 bg-slate-200 border-[1px] border-gray-400 w-full pl-4 rounded-md font-medium" 
+                                        type="text"
+                                        placeholder="NIT o CI"
+                                        name="nit"
+                                    />
                                 </label>
                                 <label className="text-gray-700 font-bold text-sm">
                                     RAZON SOCIAL:
-                                    <input className="h-10 bg-slate-200 border-[1px] border-gray-400 w-full pl-4 rounded-md font-medium" type="text" placeholder="Direccion" />
+                                    <input 
+                                        className="h-10 bg-slate-200 border-[1px] border-gray-400 w-full pl-4 rounded-md font-medium" 
+                                        type="text" 
+                                        placeholder="Direccion"
+                                        name="razon_social"
+                                    />
                                 </label>
                             </div>
                         </div>
@@ -176,7 +214,7 @@ export default function FormCheckout({subtotal}){
                                     className='bg-gray-200 w-full pl-4 py-2 rounded-md mb-4 border-[1px] border-gray-400 font-medium'
                                     placeholder='Código de cupón' 
                                     type="text" 
-                                    name="desc"
+                                    name="discount"
                                     value={discountCode}
                                     onChange={(e) => setDiscountCode(e.target.value)}
                                 />
@@ -258,10 +296,7 @@ export default function FormCheckout({subtotal}){
                             <button className="bg-teal-600 w-64 text-lg self-star text-white px-6 py-2 rounded-lg hover:bg-green-800">Realizar el Pedido</button>
 
                         </div>
-
-                        
                     </div>
-
                 </form>
         </>
     )

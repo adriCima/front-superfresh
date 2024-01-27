@@ -7,10 +7,7 @@ Actualizar los estados en los manejadores de eventos: Asegúrate de actualizar l
 
 Recuperar los valores de los estados: Una vez que el usuario ha completado el formulario, puedes acceder a los valores de los estados para enviarlos a tu base de datos.
 
-Aquí hay un ejemplo de cómo podrías estructurar tu componente FormCheckout para lograr esto:
-
-javascript
-Copy code
+# Copy code
 import React, { useState } from "react";
 
 export default function FormCheckout({subtotal}) {
@@ -137,3 +134,16 @@ enviarDatosAxios(datosParaEnviar);
 Ambos ejemplos hacen una solicitud POST a la URL de la API con los datos proporcionados en el cuerpo de la solicitud. Puedes ajustar los datos y la URL según tus necesidades específicas.
 
 En cuanto a si puedes usar fetch y Axios en el mismo proyecto, la respuesta es sí. Puedes elegir el que prefieras o el que mejor se adapte a tus necesidades y estilo de código. Ambos hacen básicamente lo mismo: enviar y recibir datos de una API.
+
+
+ shipping_type: "",
+        zona:"",
+        direcccion: "",
+        nit:"",
+        razon_social:"",
+        shipping_cost:"",
+        discount:"",
+        discoun_code:"",
+        total:"",
+        pay_type:"",
+        telefono_tm:"",

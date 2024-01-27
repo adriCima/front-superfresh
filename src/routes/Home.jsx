@@ -109,7 +109,7 @@ export default function Home() {
       </div> 
 
       <div className="p-16">
-        <SlideBetSellerProduct addToCart={addToCart} restToCart={restToCart}/>  
+        <SlideBetSellerProduct  addToCart={addToCart} restToCart={restToCart}/>  
       </div>
 
       <BannerSm className=' m-4 md:px-16 md:pb-16 '/>
@@ -121,7 +121,7 @@ export default function Home() {
       </div> 
 
       <div className="p-16">
-        <SlideNewProduct addToCart={addToCart} restToCart={restToCart}/>
+        <SlideNewProduct  addToCart={addToCart} restToCart={restToCart}/>
       </div>
 
       <Footer />   

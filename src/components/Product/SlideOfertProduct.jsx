@@ -31,7 +31,7 @@ function DataOfertProducts(){
     return {ofertProducts}    
 }
 
-export default function SlideOfertProduct({ addToCart, restToCart }){
+export default function SlideOfertProduct({ cart, addToCart, restToCart }){
     const products = DataOfertProducts()
     return(
         <Swiper
