@@ -81,6 +81,7 @@ export default function Home() {
   const subtotal = calculateSubtotal(cart);
   console.log(subtotal);
   console.log("Valor de cart:", cart);
+  
   return (
     <>
       <TopBar />

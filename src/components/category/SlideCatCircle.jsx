@@ -69,7 +69,7 @@ export default function SlideCatCircle(){
                 return(
                     
                         <SwiperSlide key={cat.id}>      
-                            <CategoryCircleMax name={cat.category} img={cat.image}/>           
+                            <CategoryCircleMax name={cat.category} img={cat.image} id={cat.id}/>           
                         </SwiperSlide>
                     
                 )

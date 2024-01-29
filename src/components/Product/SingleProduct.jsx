@@ -1,11 +1,9 @@
-'use client'
 import { MinusCircleIcon } from '@heroicons/react/24/outline'
 import './Product.css'
 import { StarIcon } from '@heroicons/react/24/solid'
-import {   } from '@heroicons/react/24/solid'
 import { PlusCircleIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
-import CardRecomiended from './CardRecomiended'
+/* import CardRecomiended from './CardRecomiended' */
 
 function ButtonsCompra(){
     return(
@@ -20,7 +18,7 @@ function ButtonsCompra(){
     )
 }
 
-export function Product({product}){
+export default function SingleProduct({product}){
 
     const [compra, setCompra] = useState(false)
 
@@ -28,13 +26,18 @@ export function Product({product}){
         setCompra(!compra)
     }
 
+    if(!product){
+        return <div>Cargando...</div>; // o 
+    }
+    
+
     return(
         <>
             <article className="md:grid md:grid-cols-2 xl:grid-cols-3">
                 <aside className="flex p-2 md:w-[400px] md:h-[350px] lg:w-[500px] justify-center items-center ">
                     <img 
                         className='border-[1px] border-slate-400 rounded-lg w-96 h-96 object-contain'
-                        src={product.image} alt={product.category} />
+                        src={product.image} alt={product.category} /> 
                 </aside>
 
                 <aside className="flex flex-col gap-2 items-start px-4 md:my-10 md:px-8"> 
@@ -89,7 +92,7 @@ export function Product({product}){
                 </div>
                     
             </article>                      
-                <CardRecomiended id={product.id_category}/>
+               {/*  <CardRecomiended id={product.id_category}/> */}
                                     
         </>
     )

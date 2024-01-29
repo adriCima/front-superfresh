@@ -10,7 +10,7 @@ export function CardProduct({product, addToCart, restToCart}){
             <article className='border-[1px] min-w-64 max-w-64 min-h-96 max-h-96 rounded-lg flex flex-col  items-center justify-between gap-1 p-4 hover:border-gray-400 hover:bg-slate-200 relative'>
                 <div className="w-full flex gap-4 items-center justify-end pr-4 ">
                     <HeartIcon className="h-6 w-6  cursor-pointer text-gray-300 hover:text-red-500"/>
-                <a  href={`/market/products/${product.id}`}>             
+                <a  href={`/products/${product.id}`}>             
                     <EyeIcon className="h-6 w-6  cursor-pointer text-gray-300 hover:text-sky-500"/>
                 </a>
                 </div>               

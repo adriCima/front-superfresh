@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import { CardProduct } from './CardProduct';
 
 // Función para cargar datos

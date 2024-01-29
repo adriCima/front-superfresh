@@ -14,10 +14,10 @@ export default function TopMenuVertical(){
                     <a href='#' >
                         <li className="text-center cursor-pointer underline-offset-4 hover:underline hover:text-gray-500">Nuevos</li>
                     </a>
-                    <a href='/market/products' >
+                    <a href='/products' >
                         <li className="text-center cursor-pointer underline-offset-4 hover:underline hover:text-gray-500">Tienda</li>
                     </a>
-                    <a href='#' >
+                    <a href='categories' >
                         <li className="text-center cursor-pointer underline-offset-4 hover:underline hover:text-gray-500">Categorias</li>
                     </a>
                     

@@ -62,14 +62,14 @@ export default function NavBar({ cart, subtotal, addToCart, restToCart }){
                     <div className="flex  items-center justify-between gap-4">
                         <a
                             className='md:hidden'
-                            href='/market/login'>
+                            href='/login'>
                             <button >
                                 <UserIcon className="h-8 w-8 text-white" />
                             </button>
                         </a> 
                         <a
                             className='hidden md:block' 
-                            href='/market/login'>
+                            href='/login'>
                             <button className='text-red-500 font-bold text-base bg-white py-1 px-4 rounded w-24 hover:bg-slate-200'>
                                 Ingresar
                             </button>
