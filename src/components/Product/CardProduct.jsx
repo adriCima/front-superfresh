@@ -14,7 +14,7 @@ export function CardProduct({product, addToCart, restToCart}){
                     <EyeIcon className="h-6 w-6  cursor-pointer text-gray-300 hover:text-sky-500"/>
                 </a>
                 </div>               
-                <div className=" w-30 h-auto overflow-hidden ">
+                <div className=" w-40 h-auto overflow-hidden ">
                     <img
                         className='w-full hover:scale-125 duration-150' 
                         src={ product.image} 
@@ -26,7 +26,7 @@ export function CardProduct({product, addToCart, restToCart}){
                     <h4 className=" text-xs text-gray-700 font-bold mt-[-8px] uppercase">{ product.descategory }</h4>
                     <div className="w-full flex flex-col gap-2">
                         <div className="w-full flex items-end justify-center gap-8 font-bold text-xl">
-                            <p className="text-gray-500 line-through"> Bs./ { product.buy_price.toFixed(2) }</p>
+                            <p className="text-gray-500 line-through decoration-red-700"> Bs./ { product.buy_price.toFixed(2) }</p>
                             <p className="text-teal-700 text-2xl"> Bs./ { product.sale_price.toFixed(2) }</p>
                         </div>
                         <span className="text-lg text-gray-600">x { product.weight }</span>

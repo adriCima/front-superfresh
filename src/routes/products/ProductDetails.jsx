@@ -5,8 +5,9 @@ import SingleProduct from '../../components/Product/SingleProduct.jsx'
 import BannerSm from '../../components/banners/BannerSm.jsx';
 
 export default function ProductDetails(){
+  
 
-    let { productid } = useParams()
+    let { productid } = useParams();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {

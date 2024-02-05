@@ -1,27 +1,12 @@
 import TopBar from '../../components/top/topbar.jsx'
 import NavBar from '../../components/top/NavBar.jsx'
-import HeroSlide from '../../components/hero/HeroSlide.jsx'
-import SlideCatCircle from '../../components/category/SlideCatCircle.jsx'
-import SlideOfertProducts from '../../components/product/SlideOfertProduct.jsx'
-import BannerTripleImg from '../../components/banners/BannerTripleImg.jsx'
-import SlideBetSellerProduct from '../../components/product/SlideBetSellerProduct.jsx'
-import BannerSm from '../../components/banners/BannerSm.jsx'
-import SlideNewProduct from '../../components/Product/SlideNewProducts.jsx'
 import { Footer } from '../../components/Footer/Footer.jsx'
 import iconwhastapp from '../../assets/svg/whatsappIcon.svg'
 import { useState, useEffect } from 'react'
+import { calculateSubtotal } from '../../utils/functions.js'
 
+export default function MainLayout({ children} ) {
 
-const calculateSubtotal = (cart) => {
-    return cart.reduce((subtotal, product) => {
-      console.log('sale_price:', product.sale_price);
-      console.log('quantity:', product.quantity);
-      
-      return subtotal + (product.sale_price * product.quantity);
-    }, 0);
-  };
-
-export default function MainLayout({children}) {  
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
@@ -49,13 +34,13 @@ export default function MainLayout({children}) {
 
   const restToCart = (product) => {
     const existingProductIndex = cart.findIndex((item) => item.id === product.id);
-  
+
     if (existingProductIndex !== -1) {
       // El producto ya existe en el carrito, actualiza cantidad y subtotal
       const updatedCart = [...cart];
       updatedCart[existingProductIndex].quantity -= 1;
       updatedCart[existingProductIndex].subtotal -= product.sale_price;
-  
+
       // Verifica si la nueva cantidad es cero
       if (updatedCart[existingProductIndex].quantity === 0) {
         // Filtra los productos del carrito y crea un nuevo carrito sin el producto con cantidad cero
@@ -70,35 +55,33 @@ export default function MainLayout({children}) {
       const updatedCart = [...cart, { ...product, quantity: 1, subtotal: product.sale_price }];
       setCart(updatedCart);
     }
-  
+
     localStorage.setItem('cart', JSON.stringify(cart));
   };
 
   const subtotal = calculateSubtotal(cart);
-  console.log(subtotal);
-  console.log("Valor de cart:", cart);
 
+  return (
+  
+      <>
+        <TopBar />
+        <NavBar cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart} />
 
-
- return (
-    <>
-        <TopBar />      
-        <NavBar cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart}/>   
-
-        {children} 
-        <Footer />   
+        {children}
+        <Footer />
 
         <div className="fixed bottom-12 right-12 z-10">
-            <a        
-                href='https://bit.ly/3NXBsqn' // link de WhatsApp de SuperFresh  68258778
-                target='blank'
-            >
-            <img 
-                className='w-14 h-14'
-                src={iconwhastapp}
-                alt="SuperFres Facebook" />                 
-            </a>
-        </div>    
-    </>
+          <a
+            href='https://bit.ly/3NXBsqn' // link de WhatsApp de SuperFresh  68258778
+            target='blank'
+          >
+            <img
+              className='w-14 h-14'
+              src={iconwhastapp}
+              alt="SuperFres Facebook" />
+          </a>
+        </div>
+      </>
+   
   )
 }

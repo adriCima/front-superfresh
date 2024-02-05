@@ -147,3 +147,87 @@ En cuanto a si puedes usar fetch y Axios en el mismo proyecto, la respuesta es s
         total:"",
         pay_type:"",
         telefono_tm:"",
+
+
+# Pasar props main layout
+ 
+ aqui no me quedo claro 
+ # Copy code
+import { CartProvider } from 'ruta-a-CartContext'; // Reemplaza 'ruta-a-CartContext' con la ruta correcta
+
+export default function MainLayout({ children }) {
+  // ... tu código actual ...
+
+  return (
+    <CartProvider>
+      <>
+        <TopBar />
+        <NavBar cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart} />
+        {children}
+        <Footer />
+
+        <div className="fixed bottom-12 right-12 z-10">
+          {/* ... */}
+        </div>
+      </>
+    </CartProvider>
+  );
+}
+
+en todo caso en el main layout repito una vez mas esta parte 
+
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCart(storedCart);
+  }, []); // Solo se ejecuta una vez al montar el componente
+
+  const addToCart = (product) => {
+    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+
+    if (existingProductIndex !== -1) {
+      // El producto ya existe en el carrito, actualiza cantidad y subtotal
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity += 1;
+      updatedCart[existingProductIndex].subtotal += product.sale_price;
+      setCart(updatedCart);
+    } else {
+      // El producto no existe en el carrito, agrégalo con cantidad y subtotal inicial
+      const updatedCart = [...cart, { ...product, quantity: 1, subtotal: product.sale_price }];
+      setCart(updatedCart);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
+
+  const restToCart = (product) => {
+    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+  
+    if (existingProductIndex !== -1) {
+      // El producto ya existe en el carrito, actualiza cantidad y subtotal
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity -= 1;
+      updatedCart[existingProductIndex].subtotal -= product.sale_price;
+  
+      // Verifica si la nueva cantidad es cero
+      if (updatedCart[existingProductIndex].quantity === 0) {
+        // Filtra los productos del carrito y crea un nuevo carrito sin el producto con cantidad cero
+        const newCart = updatedCart.filter((item) => item.quantity > 0);
+        setCart(newCart);
+      } else {
+        // Actualiza el estado del carrito
+        setCart(updatedCart);
+      }
+    } else {
+      // El producto no existe en el carrito, agrégalo con cantidad y subtotal inicial
+      const updatedCart = [...cart, { ...product, quantity: 1, subtotal: product.sale_price }];
+      setCart(updatedCart);
+    }
+  
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
+
+  const subtotal = calculateSubtotal(cart);  
+
+  

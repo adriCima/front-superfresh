@@ -17,10 +17,12 @@ function DataCategories() {
     useEffect(() => {
        function loadCategory() {
         try {
-           fetch('http://localhost:3000/api/categories')
+           fetch('http://localhost:3000/api/category')
           .then(response => response.json())
-          .then(data => setCategory(data.result));        
-        } catch (error) {
+          .then(data => {
+            setCategory(data.result);         
+          })
+        } catch (error) {         
           console.error('Error al cargar categorías:', error);
         }
       }
@@ -62,7 +64,7 @@ export default function SlideCatCircle(){
           delay: 5000,
           disableOnInteraction: false,
         }}
-       /*  loop={true} */
+       loop={true}
       >
         {
             categorias.category.map(cat =>{

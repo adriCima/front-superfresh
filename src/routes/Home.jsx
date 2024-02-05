@@ -8,8 +8,8 @@ import SlideBetSellerProduct from '../components/product/SlideBetSellerProduct.j
 import BannerSm from '../components/banners/BannerSm.jsx'
 import SlideNewProduct from '../components/Product/SlideNewProducts.jsx'
 import { Footer } from '../components/Footer/Footer.jsx'
-import iconwhastapp from '../assets/svg/whatsappIcon.svg'
 import { useState, useEffect } from 'react'
+import WhatsAppFloat from '../components/tools/WhatsAppFloat.jsx'
 
 
 //Funcion para limpiear el localstorage
@@ -88,6 +88,11 @@ export default function Home() {
       
       <NavBar cart={cart} subtotal={subtotal} addToCart={addToCart} restToCart={restToCart}/>
       <HeroSlide />
+      <div className="flex flex-col items-center justify-center mt-4">
+        <h2 className="text-blue-900 font-semibold text-3xl flex items-center justify-center">CATEGORIAS</h2>
+        <div className="border-b-4 border-blue-900 w-36"></div>
+        
+      </div> 
       <SlideCatCircle />  
 
       <div className="flex flex-col items-center justify-center">
@@ -127,17 +132,7 @@ export default function Home() {
 
       <Footer />   
 
-      <div className="fixed bottom-12 right-12 z-10">
-            <a        
-              href='https://bit.ly/3NXBsqn' // link de WhatsApp de SuperFresh  68258778
-              target='blank'
-            >
-              <img 
-                className='w-14 h-14'
-                src={iconwhastapp}
-                alt="SuperFres Facebook" />                 
-            </a>
-          </div>    
+      <WhatsAppFloat />
       
     </>
   )

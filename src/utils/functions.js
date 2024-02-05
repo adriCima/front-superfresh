@@ -16,6 +16,16 @@
         }, []);
       };
 
+// Funcion para calcular el subtotal 
+export const calculateSubtotal = (cart) => {
+  return cart.reduce((subtotal, product) => {
+    console.log('sale_price:', product.sale_price);
+    console.log('quantity:', product.quantity);
+    
+    return subtotal + (product.sale_price * product.quantity);
+  }, 0);
+};   
+
 
 
 

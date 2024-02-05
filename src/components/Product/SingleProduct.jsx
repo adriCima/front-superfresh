@@ -3,15 +3,19 @@ import './Product.css'
 import { StarIcon } from '@heroicons/react/24/solid'
 import { PlusCircleIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
-/* import CardRecomiended from './CardRecomiended' */
+import CardRecomiended from './CardRecomiended' 
 
 function ButtonsCompra(){
     return(
         <>
             <div className="flex gap-4 items-center justify-center w-52 h-9 rounded-xl border-[1px] border-green-700">
-                <button > <MinusCircleIcon className='w-6 h-6 text-gray-400 hover:text-red-800'/> </button>                           
+                <button 
+                   
+                > <MinusCircleIcon className='w-6 h-6 text-gray-400 hover:text-red-800'/> </button>                           
                 <span className=' font-bold text-base text-gray-800'>1</span>
-                <button > <PlusCircleIcon className='w-6 h-6 text-gray-400 hover:text-green-800'/> </button>                           
+                <button 
+                  
+                > <PlusCircleIcon className='w-6 h-6 text-gray-400 hover:text-green-800'/> </button>                           
                 <p className=' font-bold text-base text-gray-800'>Bs. 3.50</p>
             </div>
         </>
@@ -19,7 +23,7 @@ function ButtonsCompra(){
 }
 
 export default function SingleProduct({product}){
-
+    
     const [compra, setCompra] = useState(false)
 
     const toggleButtons = () =>{
@@ -64,8 +68,8 @@ export default function SingleProduct({product}){
 
                     <div className=" flex  items-end gap-12 self-center mt-4">
                         <div className=" font-bold">
-                            <p className='text-gray-500 text-xl line-through decoration-red-700 decoration-2'>Bs. {product.buy_price}</p>
-                            <p className='text-green-900 text-2xl'>Bs. {product.sale_price}</p>
+                            <p className='text-gray-500 text-xl line-through decoration-red-700 decoration-2'>Bs. {product.buy_price.toFixed(2)}</p>
+                            <p className='text-green-900 text-2xl'>Bs. {product.sale_price.toFixed(2)}</p>
                         </div>
                         <span className="text-gray-500 text-lg font-bold">
                             Precio por {product.des_weight}
@@ -92,7 +96,7 @@ export default function SingleProduct({product}){
                 </div>
                     
             </article>                      
-               {/*  <CardRecomiended id={product.id_category}/> */}
+               <CardRecomiended id={product.id_category}/>
                                     
         </>
     )

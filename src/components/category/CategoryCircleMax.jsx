@@ -7,7 +7,7 @@ export default function CategoryCircleMax( category ) {
               <div className="w-36 h-36 rounded-full overflow-hidden border-2 border-gray-800">
                 <img src={ category.img } alt={category.name} className="w-full h-full object-cover rounded-full"/>
               </div>
-              <h2 className="text-gray-800 font-bold text-xl capitalize">{category.name}</h2>
+              <h2 className="text-gray-800 font-bold text-xl uppercase">{category.name}</h2>
             </div>
           </a>
         </div>
