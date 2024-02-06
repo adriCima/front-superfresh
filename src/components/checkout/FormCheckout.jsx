@@ -1,6 +1,33 @@
 import { TruckIcon, CurrencyDollarIcon, ClipboardDocumentIcon, CreditCardIcon, BanknotesIcon } from "@heroicons/react/24/outline"
 import qrpago from '../../assets/checkout/qr_example.png'
 import { useState } from "react"
+import Swal from "sweetalert2";
+
+
+const PedidoRealizado = () => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "center",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: `Pedido Realizado correctamente`
+    });
+
+    setTimeout(() => {
+        localStorage.clear();     
+        window.location.href = '/'; 
+    }, 3000); 
+         
+  };
+  
 
 export default function FormCheckout({subtotal}){
     const [shippingType, setShippingType] = useState(0);
@@ -16,14 +43,15 @@ export default function FormCheckout({subtotal}){
         shipping_type: "",
         zona:"",
         direcccion: "",
-        nit:"",
-        razon_social:"",
+        nit:0,
+        razon_social:"S/N",
         shipping_cost:"",
         discount:"",
         discoun_code:"",
         total:"",
         pay_type:"",
-        telefono_tm:"",
+        comprobante_tm:"",
+        comprobante_qr:"",
     })
 
     // funcion que dispara el caputrar los datos
@@ -131,34 +159,42 @@ export default function FormCheckout({subtotal}){
                     disabled/>                                    
                 </label>
                 <label className="font-bold text-gray-600">
-                    REGISTRE SU NÚMERO TIGO MONEY 
+                   REGISTRE EL NUMERO DE COMPROBANTE DE PAGO
                     <input 
                     className="w-full my-2 bg-slate-200 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium"
                     type="text" 
                     placeholder="XXX-XXXXX" />                                    
                 </label>
-                <strong className="text-red-800">Finalize el proceso, recibirá la confirmación del pedido en cuanto registremos correctamente la transacción</strong>
+                <strong className="text-red-800">Realize el pago, Finalize el proceso, recibirá la confirmación del pedido en cuanto registremos correctamente la transacción</strong>
             </>
         )
     }else if(paymethod === 'qr'){
         payContent = (
             <> 
                 <div className="w-full flex items-center justify-center gap-2">
-                    <img src={qrpago} alt={qrpago} />               
+                    <img src={qrpago} alt={qrpago} className="w-40 h-40" />               
                                                   
                 </div>
               
-                <ol className="text-red-800 text-sm text-balance font-bold list-decimal mb-4">
+                <ol className="text-red-800 text-sm text-balance font-bold list-decimal m-2">
                     <li>Escane el Codigo QR</li>
                     <li>Realize el pago</li>
-                    <li>Envíe el comprobante por whatsapp.</li>                   
+                    <li>Registre el número de comprobante o envíe el comprobante por whatsapp.</li>                   
                     <li>Finalice el proceso</li>                   
                     <li>Recibirá la confirmación del pedido en cuanto registremos correctamenta la transacción</li>
                 </ol>
+                <label className="font-bold text-gray-600 ">
+                   REGISTRE EL NUMERO DE COMPROBANTE DE PAGO
+                    <input 
+                    className="w-full my-2 bg-slate-200 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium"
+                    type="text" 
+                    name="comprobanteqr"
+                    placeholder="00000" />                                    
+                </label>
                 <a  
                     target="blanck"
                     href="https://wa.me/59175226707" 
-                    className="bg-teal-700 px-6 py-2 text-white rounded-md "> 
+                    className="bg-teal-700 px-6 py-2 text-white rounded-md text-center"> 
                     Enviar Comprobante
                 </a>
 
@@ -301,7 +337,7 @@ export default function FormCheckout({subtotal}){
                                         <label for="qr">QR - Simple</label>
                                     </div>        
                                 </div>
-                                <div className=" min-h-48">
+                                <div className="flex  flex-col">
                                     { payContent }
                                 </div>                              
                             </div>                        
@@ -314,7 +350,9 @@ export default function FormCheckout({subtotal}){
                                 <h3 className="font-bold">FINALIZAR PEDIDO</h3>
                             </div>                        
                             
-                            <button className="bg-teal-600 w-64 text-lg self-star text-white px-6 py-2 rounded-lg hover:bg-green-800">Realizar el Pedido</button>
+                            <button 
+                                onClick={ PedidoRealizado }
+                                className="bg-teal-600 w-64 text-lg self-star text-white px-6 py-2 rounded-lg hover:bg-green-800">Realizar el Pedido</button>
 
                         </div>
                     </div>

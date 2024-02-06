@@ -90,13 +90,13 @@ export default function SingleProduct({product}){
                     </div>                   
                 </aside>  
 
-                <div className='md:px-20 xl:px-4 xl:py-8 '>
+                <div className='px-8 md:px-20 xl:px-4 xl:py-8 '>
                     <h3 className='font-bold'>DESCRIPCION</h3>
-                    <p className='p-4 text-gray-600 font-semibold italic text-lg'>{product.description}</p>
+                    <p className='p-4 text-gray-600 font-semibold italic text-base text-balance'>{product.description}</p>
                 </div>
                     
             </article>                      
-               <CardRecomiended id={product.id_category}/>
+               <CardRecomiended id={product.id_category} />
                                     
         </>
     )

@@ -1,4 +1,4 @@
-import bannersm1_web from '../../assets/banners/banner_sm_page.png'
+import bannersm1_web from '../../assets/banners/banner_sm.png'
 
 export default function BannerSm({className}){
     return(

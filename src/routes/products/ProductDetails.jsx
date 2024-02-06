@@ -8,6 +8,7 @@ export default function ProductDetails(){
   
 
     let { productid } = useParams();
+    console.log(productid);
     const [product, setProduct] = useState(null);
 
     useEffect(() => {

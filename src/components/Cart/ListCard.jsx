@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import {  TrashIcon, ShoppingBagIcon } from '@heroicons/react/24/solid'
 
 import { groupAndSumProducts } from '../../utils/functions'
-import { CardProduct } from '../product/CardProduct';
+/* import { CardProduct } from '../product/CardProduct'; */
 import ButtonsAgreeDisagree from './buttonsAgreeDisagre';
 
 export default function ListCart({cart, subtotal, addToCart, restToCart}) {

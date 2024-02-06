@@ -2,7 +2,7 @@ import  { useState, useEffect } from 'react';
 
 import { CardProduct } from './CardProduct';
 
-async function cargarDatos(id, setProducts) {
+async function cargarDatos(id , setProducts) {
   try {
     const response = await fetch(`http://localhost:3000/api/products/related/${id}`);
     if (!response.ok) {
@@ -37,7 +37,7 @@ export default function CardRecomiended({ id }) {
 
   useEffect(() => {
     console.log('Realizando llamada de datos para id:', id);
-    cargarDatos(id, setProducts);
+    cargarDatos(id,  setProducts);
   }, [id]);
 
   // Renderizado del componente
