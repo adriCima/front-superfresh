@@ -39,8 +39,8 @@ export default function FormCheckout({subtotal}){
     const [discountApplied, setDiscountApplied] = useState(false);
     
     // Iniciamos con valores predeterminados para el registro de la venta
-    const [formData, setFormData] = useState({
-        shipping_type: "",
+    const [ saleorders, setSaleordes] = useState({
+        shipping_type: 0,
         zona:"",
         direcccion: "",
         nit:0,
@@ -55,14 +55,19 @@ export default function FormCheckout({subtotal}){
     })
 
     // funcion que dispara el caputrar los datos
-    const  handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({...formData, [bane] : value})
+    const handleChange = (e) => {
+        setSaleordes({
+            ...saleorders,
+            [e.target.name]: e.target.value
+            
+        })
+        console.log(saleorders)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
+        console.log(saleorders);
+    
     }
  
     // Arreglo de ejemplo para los cupones de descuento
@@ -155,6 +160,7 @@ export default function FormCheckout({subtotal}){
                     <input 
                     className="w-full my-2 bg-slate-200 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium"
                     type="text" 
+                    name="nt_personal"
                     value="68258778" 
                     disabled/>                                    
                 </label>
@@ -163,6 +169,7 @@ export default function FormCheckout({subtotal}){
                     <input 
                     className="w-full my-2 bg-slate-200 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium"
                     type="text" 
+                    name="comprobante_tm"
                     placeholder="XXX-XXXXX" />                                    
                 </label>
                 <strong className="text-red-800">Realize el pago, Finalize el proceso, recibirá la confirmación del pedido en cuanto registremos correctamente la transacción</strong>
@@ -188,7 +195,7 @@ export default function FormCheckout({subtotal}){
                     <input 
                     className="w-full my-2 bg-slate-200 border-[1px] border-gray-400 rounded-md h-10 pl-4 font-medium"
                     type="text" 
-                    name="comprobanteqr"
+                    name="comprobante_qr"
                     placeholder="00000" />                                    
                 </label>
                 <a  
@@ -219,7 +226,7 @@ export default function FormCheckout({subtotal}){
                                 <select 
                                     className="h-10 bg-slate-200 rounded-md border-[1px] border-gray-400 pl-4 "
                                     name="shipping_type"                                 
-                                    onChange={handleShippingChange}
+                                    onChange={ handleChange }
                                 >
                                     <option value="0">Seleccionar -- </option>
                                     <option value="1">Retiro en tienda</option>
@@ -271,7 +278,7 @@ export default function FormCheckout({subtotal}){
                                     className='bg-gray-200 w-full pl-4 py-2 rounded-md mb-4 border-[1px] border-gray-400 font-medium'
                                     placeholder='Código de cupón' 
                                     type="text" 
-                                    name="discount"
+                                    name="discount_code"
                                     value={discountCode}
                                     onChange={(e) => setDiscountCode(e.target.value)}
                                 />
@@ -325,15 +332,16 @@ export default function FormCheckout({subtotal}){
                             <div className="grid  md:grid-cols-2 gap-2 px-2 md:px-4 mb-6 ">
                                 <div className="flex flex-col ">
                                     <div>
-                                        <input className="mr-4" type="radio" name="payMethod" value="efectivo" onChange={handlePayMethod}/>
+                                        <input className="mr-4" type="radio" name="pay_type" value="1" 
+                                         onChange={(e) => handlePayMethod(e.target.value)}/>
                                         <label for="efectivo">Pago en efectivo</label>
                                     </div>                            
                                     <div>
-                                        <input className="mr-4" type="radio" name="payMethod" value="tigomoney" onChange={handlePayMethod} />
+                                        <input className="mr-4" type="radio" name="pay_type" value="2" onChange={(e) => handlePayMethod(e.target.value)}/>
                                         <label for="tigomoney">Tigo Money</label>
                                     </div>
                                     <div>
-                                        <input className="mr-4" type="radio" name="payMethod" value="qr" onChange={handlePayMethod} />
+                                        <input className="mr-4" type="radio" name="pay_type" value="3" onChange={(e) => handlePayMethod(e.target.value)}/>
                                         <label for="qr">QR - Simple</label>
                                     </div>        
                                 </div>
